@@ -28,7 +28,6 @@ export class Battle{
 
         console.log("\n=== Battle Start ===\n");
         Battle.displayVsMessage(playerPoke, enemyPoke, false);
-        let switched = "";
         let action: string;
 
         do {
