@@ -1,0 +1,9 @@
+
+export interface IPokemon {
+    name: string;
+    health: number;
+    level: number;
+    power: string;
+    attack(target: IPokemon): void;
+    defend(): void;
+}

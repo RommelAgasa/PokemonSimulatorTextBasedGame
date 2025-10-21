@@ -1,0 +1,1 @@
+{"version":3,"file":"IPlayer.d.ts","sourceRoot":"","sources":["../../src/Interfaces/IPlayer.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,MAAM,wBAAwB,CAAC;AAEtD,MAAM,WAAW,OAAO;IACpB,MAAM,CAAC,MAAM,EAAE,OAAO,GAAG,IAAI,CAAC;IAC9B,MAAM,IAAI,IAAI,CAAC;IACf,oBAAoB,IAAI,IAAI,CAAC;IAC7B,kBAAkB,IAAI,OAAO,CAAC;CACjC"}

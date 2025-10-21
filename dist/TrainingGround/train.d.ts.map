@@ -1,0 +1,1 @@
+{"version":3,"file":"train.d.ts","sourceRoot":"","sources":["../../src/TrainingGround/train.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,MAAM,0BAA0B,CAAC;AAExD,qBAAa,QAAQ;IACjB,OAAO,CAAC,MAAM,CAAU;gBAEZ,MAAM,EAAE,OAAO;IAIpB,aAAa,IAAI,IAAI;CAK/B"}

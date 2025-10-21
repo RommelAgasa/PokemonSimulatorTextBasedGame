@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    // ✅ Use NodeNext for Node.js ESM imports
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    // ✅ Target modern Node.js features
+    "target": "ES2022",
+    "lib": ["ES2022"],
+
+    // ✅ Enable Node.js type definitions
+    "types": ["node"],
+
+    // ✅ Usual safety and output options
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}

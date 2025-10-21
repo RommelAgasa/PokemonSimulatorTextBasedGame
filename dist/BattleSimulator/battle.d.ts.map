@@ -1,0 +1,1 @@
+{"version":3,"file":"battle.d.ts","sourceRoot":"","sources":["../../src/BattleSimulator/battle.ts"],"names":[],"mappings":"AACA,OAAO,MAAM,MAAM,qBAAqB,CAAC;AAIzC,qBAAa,MAAM;IAGf,OAAO,CAAC,aAAa,CAOnB;IAEF,OAAO,CAAC,KAAK,CAA2C;IAExD,WAAW,CAAC,MAAM,EAAE,MAAM,GAAG,IAAI;IA0CjC,OAAO,CAAC,UAAU;IAkBlB,OAAO,CAAC,MAAM,CAAC,gBAAgB;CAQlC"}

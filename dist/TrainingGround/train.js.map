@@ -1,0 +1,1 @@
+{"version":3,"file":"train.js","sourceRoot":"","sources":["../../src/TrainingGround/train.ts"],"names":[],"mappings":"AAEA,MAAM,OAAO,QAAQ;IACT,MAAM,CAAU;IAExB,YAAY,MAAe;QACvB,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;IACzB,CAAC;IAEM,aAAa;QAChB,OAAO,CAAC,GAAG,CAAC,yCAAyC,CAAC,CAAC;QACvD,OAAO,CAAC,GAAG,CAAC,mCAAmC,CAAC,CAAC;IACrD,CAAC;CAEJ"}
