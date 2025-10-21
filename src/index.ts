@@ -6,9 +6,10 @@ import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 
 const rl = createInterface({ input, output });
-const battle = new Battle();
+let battle = new Battle();
 
 let endGame = false;
+let playerName = "";
 
 async function ask(question: string): Promise<string> {
   const answer = await rl.question(question);
@@ -22,19 +23,19 @@ async function choosePokemons(): Promise<Pokemon[]> {
   });
 
   let chosen: Pokemon[] = [];
-  while (chosen.length !== 6) {
+  while (chosen.length !== 3) {
     const input = await ask(
-      "\nChoose 6 Pokémon by number (comma-separated, e.g. 1,3,5,6,7,9): "
+      "\nChoose 3 Pokémon by number (comma-separated, e.g. 1,3,5): "
     );
     const indexes = input
       .split(",")
       .map((x) => parseInt(x.trim()) - 1)
       .filter((i) => i >= 0 && i < availablePokemons.length);
 
-    if (indexes.length === 6) {
+    if (indexes.length === 3) {
       chosen = indexes.map((i) => availablePokemons[i]);
     } else {
-      console.log("❌ You must select exactly 6 Pokémon!");
+      console.log("❌ You must select exactly 3 Pokémon!");
     }
   }
 
@@ -45,16 +46,23 @@ do {
   console.clear();
   console.log("🎮 Welcome to Pokémon Battle Simulator!\n");
 
-  const playerName = await ask("Enter your name: ");
+  if(playerName === ""){
+    playerName = await ask("Enter your player name: ");
+  }
+  
   console.log(`\nHello, ${playerName}! Let's pick your team.\n`);
 
   const chosenPokemons = await choosePokemons();
 
   const player = new Player(chosenPokemons, playerName);
-  await battle.startBattle(player);
+  await battle.startBattle(player, ask);
 
   const again = await ask("\nDo you want to play again? (y/n): ");
   endGame = again.toLowerCase() !== "y";
+
+  if(!endGame){
+    battle = new Battle();
+  }
 
 } while (!endGame);
 

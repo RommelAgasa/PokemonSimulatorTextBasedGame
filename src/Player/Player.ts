@@ -16,7 +16,7 @@ export default class Player implements IPlayer {
     const available = this.pokemons.find(p => p.health > 0);
     if (available) {
       this.activePokemon = available;
-      console.log(`${this.name} sends out ${available.name}!`);
+      console.log(`\n${this.name} sends out ${available.name}!`);
     } else {
       console.log("All Pokémon fainted!");
     }

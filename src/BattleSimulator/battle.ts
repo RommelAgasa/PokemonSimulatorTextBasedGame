@@ -10,14 +10,12 @@ export class Battle{
         new Pokemon("Meowth", "Normal", 4),
         new Pokemon("Arbok", "Poison", 6),
         new Pokemon("Koffing", "Poison", 5),
-        new Pokemon("Sandshrew", "Ground", 5),
-        new Pokemon("Raticate", "Normal", 4),
-        new Pokemon("Weezing", "Poison", 7)
+        new Pokemon("Sandshrew", "Ground", 5)
     ];
 
     private enemy = new Player(this.enemyPokemons, "Enemy");
 
-    startBattle(player: Player): void {
+    async startBattle(player: Player, ask: (question: string) => Promise<string>): Promise<void> {
         
         console.log("\n\n=== Pokémon Battle Simulator ===\n\n");
 
@@ -25,35 +23,66 @@ export class Battle{
         player.choosePokemonToFight();
         this.enemy.choosePokemonToFight();
 
-        console.log("\n=== Battle Start ===\n");
-
         let playerPoke = player.getActivePokemon()!;
         let enemyPoke = this.enemy.getActivePokemon()!;
 
+        console.log("\n=== Battle Start ===\n");
         Battle.displayVsMessage(playerPoke, enemyPoke, false);
-        while (!player.isAllPokemonIsDead() && !this.enemy.isAllPokemonIsDead()) {
+        let switched = "";
+        let action: string;
 
-        if(playerPoke.health <= 0) {
-            player.choosePokemonToFight();
-            playerPoke = player.getActivePokemon()!;
-            Battle.displayVsMessage(playerPoke, enemyPoke, true);
-        }
-        
-        if(enemyPoke.health <= 0) {
-            this.enemy.choosePokemonToFight();
-            enemyPoke = this.enemy.getActivePokemon()!;
-            Battle.displayVsMessage(playerPoke, enemyPoke, true);
-        }
+        do {
+            //  Wait for player action
+            action = (await ask("Press [A] to Attack or [D] to Defend and press Enter to continue...")).toLowerCase();
 
-        this.AttackTurn(player);
-            console.log("\n-----------------------\n");
-        }
+            if (action === "a") {
+                // Player attacks first
+                this.AttackTurn(player);
+            } 
+            else if (action === "d") {
+                // Player defends first
+                player.defend();
 
+                // Enemy only attacks if still alive
+                if (this.enemy.getActivePokemon()!.health > 0) {
+                    this.enemy.attack(player.getActivePokemon()!);
+                }
+            } 
+            else {
+                console.log("❌ Invalid action! Please enter A or D.");
+                continue; // repeat the turn
+            }
+
+            console.log("\n---------------------------------------------------------------\n");
+
+            // Check if enemy fainted after attack
+            if (this.enemy.getActivePokemon()!.health <= 0) {
+                console.log(`${this.enemy.name}'s ${this.enemy.getActivePokemon()!.name} fainted!\n`);
+                if (!this.enemy.isAllPokemonIsDead()) {
+                    this.enemy.choosePokemonToFight();
+                    const enemyPoke = this.enemy.getActivePokemon()!;
+                    Battle.displayVsMessage(player.getActivePokemon()!, enemyPoke, true);
+                }
+                continue; // skip to next loop
+            }
+
+            // Check if player fainted after enemy’s attack
+            if (player.getActivePokemon()!.health <= 0) {
+                console.log(`${player.name}'s ${player.getActivePokemon()!.name} fainted!\n`);
+                if (!player.isAllPokemonIsDead()) {
+                    player.choosePokemonToFight();
+                    const playerPoke = player.getActivePokemon()!;
+                    Battle.displayVsMessage(playerPoke, this.enemy.getActivePokemon()!, true);
+                }
+                continue; // skip to next loop
+            }
+
+        } while (!player.isAllPokemonIsDead() && !this.enemy.isAllPokemonIsDead());
 
         if(player.isAllPokemonIsDead()) {
-            console.log("Enemy wins the battle!");
+            console.log("\nEnemy wins the battle!");
         } else {
-            console.log(`${player.name} wins the battle!`);
+            console.log(`\n${player.name} wins the battle!`);
         }
 
 

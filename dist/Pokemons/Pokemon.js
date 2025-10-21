@@ -18,7 +18,7 @@ export class Pokemon {
         target.health -= damage;
         if (target.health < 0)
             target.health = 0;
-        console.log(`${this.name} attacks ${target.name} with ${this.power} power and deals ${damage} damage!`);
+        console.log(`\n${this.name} attacks ${target.name} with ${this.power} power and deals ${damage} damage!`);
         if (target.health <= 0) {
             console.log(`${target.name} fainted!`);
         }
