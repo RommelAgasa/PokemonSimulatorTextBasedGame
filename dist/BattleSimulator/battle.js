@@ -22,11 +22,6 @@ export class Battle {
         }
         return new Player(enemyPokemons, enemyName);
     }
-    // --- Setup Players ---
-    setup(playerPokemons, enemyPokemons, playerName, enemyName) {
-        this.player = new Player(playerPokemons, playerName);
-        this.enemy = new Player(enemyPokemons, enemyName);
-    }
     // --- Entry Point ---
     async startBattle(ask) {
         if (!this.player || !this.enemy) {

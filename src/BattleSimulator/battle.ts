@@ -14,25 +14,19 @@ export class Battle {
   }
 
   public static makeEnemy(): IPlayer {
-      const enemyName = "Team Rocket Grunt";
-      const allPokemons = PokemonCatalog.all;
-      const enemyPokemons: Pokemon[] = [];
-      while (enemyPokemons.length < 3) {
-        const randomIndex = Math.floor(Math.random() * allPokemons.length);
-        const p = allPokemons[randomIndex];
-        const spawned = PokemonFactory.createPokemon(p.name, p.power, p.level) as Pokemon;
-        if (!enemyPokemons.find(ep => ep.name === spawned.name)) {
-          enemyPokemons.push(spawned);
-        }
+    const enemyName = "Team Rocket Grunt";
+    const allPokemons = PokemonCatalog.all;
+    const enemyPokemons: Pokemon[] = [];
+    while (enemyPokemons.length < 3) {
+      const randomIndex = Math.floor(Math.random() * allPokemons.length);
+      const p = allPokemons[randomIndex];
+      const spawned = PokemonFactory.createPokemon(p.name, p.power, p.level) as Pokemon;
+      if (!enemyPokemons.find(ep => ep.name === spawned.name)) {
+        enemyPokemons.push(spawned);
       }
-
-      return new Player(enemyPokemons, enemyName);
     }
 
-  // --- Setup Players ---
-  public setup(playerPokemons: Pokemon[], enemyPokemons: Pokemon[], playerName: string, enemyName: string): void {
-    this.player = new Player(playerPokemons, playerName);
-    this.enemy = new Player(enemyPokemons, enemyName);
+    return new Player(enemyPokemons, enemyName);
   }
 
   // --- Entry Point ---

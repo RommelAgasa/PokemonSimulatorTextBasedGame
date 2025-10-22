@@ -19,7 +19,7 @@ export class GameController {
       console.log(`\nHello, ${playerName}! Let's pick your team.\n`);
 
       const chosenPokemons = await GameInterface.choosePokemons();
-      const player = new Player(chosenPokemons, playerName); // create new player each game // to reset state
+      const player : IPlayer = new Player(chosenPokemons, playerName); // create new player each game // to reset state
 
       const battle = new Battle(player);
       await battle.startBattle(GameInterface.ask);
