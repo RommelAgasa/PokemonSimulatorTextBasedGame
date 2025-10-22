@@ -6,7 +6,6 @@ export class GameController {
     static async start() {
         let playAgain = true;
         let playerName = "";
-        let player;
         while (playAgain) {
             console.clear();
             console.log("Welcome to Pokémon Battle Simulator!\n");
@@ -15,7 +14,7 @@ export class GameController {
             }
             console.log(`\nHello, ${playerName}! Let's pick your team.\n`);
             const chosenPokemons = await GameInterface.choosePokemons();
-            player = new Player(chosenPokemons, playerName); // create new player each game // to reset state
+            const player = new Player(chosenPokemons, playerName); // create new player each game // to reset state
             const battle = new Battle(player);
             await battle.startBattle(GameInterface.ask);
             const again = await GameInterface.ask("\nDo you want to play again? (y/n): ");

@@ -8,7 +8,6 @@ export class GameController {
   public static async start(): Promise<void> {
     let playAgain = true;
     let playerName: string = "";
-    let player: IPlayer;
 
     while (playAgain) {
       console.clear();
@@ -20,7 +19,7 @@ export class GameController {
       console.log(`\nHello, ${playerName}! Let's pick your team.\n`);
 
       const chosenPokemons = await GameInterface.choosePokemons();
-      player = new Player(chosenPokemons, playerName); // create new player each game // to reset state
+      const player = new Player(chosenPokemons, playerName); // create new player each game // to reset state
 
       const battle = new Battle(player);
       await battle.startBattle(GameInterface.ask);

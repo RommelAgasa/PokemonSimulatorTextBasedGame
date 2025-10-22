@@ -1,9 +1,6 @@
 import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { Pokemon } from "../Pokemons/Pokemon.js";
-import Player from "../Player/Player.js";
-import { IPlayer } from "../Interfaces/IPlayer.js";
-import { Battle } from "../BattleSimulator/battle.js";
 import { PokemonFactory } from "../Pokemons/PokemonFactory.js";
 import { PokemonCatalog } from "../Pokemons/PokemonCatalog.js";
 
