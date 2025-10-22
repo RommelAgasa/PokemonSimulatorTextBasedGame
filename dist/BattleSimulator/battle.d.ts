@@ -1,8 +1,8 @@
-import Player from "../Player/Player.js";
+import { IPlayer } from "../Interfaces/IPlayer.js";
 export declare class Battle {
     private enemyPokemons;
     private enemy;
-    startBattle(player: Player, ask: (question: string) => Promise<string>): Promise<void>;
+    startBattle(player: IPlayer, ask: (question: string) => Promise<string>): Promise<void>;
     private AttackTurn;
     private static displayVsMessage;
 }

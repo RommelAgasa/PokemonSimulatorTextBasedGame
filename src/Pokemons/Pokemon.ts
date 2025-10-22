@@ -15,7 +15,7 @@ export class Pokemon implements IPokemon {
     this.health = this.maxHealth;
   }
 
-  attack(target: Pokemon): void {
+  attack(target: IPokemon): void {
     const baseDamage = 5 + this.level * 2;
     const multiplier = this.getTypeMultiplier(target.power);
     const damage = Math.floor(baseDamage * multiplier);

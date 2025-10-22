@@ -27,20 +27,20 @@ async function choosePokemons() {
             chosen = indexes.map((i) => availablePokemons[i]);
         }
         else {
-            console.log("❌ You must select exactly 3 Pokémon!");
+            console.log("You must select exactly 3 Pokémon!");
         }
     }
     return chosen;
 }
 do {
     console.clear();
-    console.log("🎮 Welcome to Pokémon Battle Simulator!\n");
+    console.log("Welcome to Pokémon Battle Simulator!\n");
     if (playerName === "") {
         playerName = await ask("Enter your player name: ");
     }
     console.log(`\nHello, ${playerName}! Let's pick your team.\n`);
     const chosenPokemons = await choosePokemons();
-    const player = new Player(chosenPokemons, playerName);
+    const player = new Player(chosenPokemons, playerName); // create player with name and chosen Pokémons
     await battle.startBattle(player, ask);
     const again = await ask("\nDo you want to play again? (y/n): ");
     endGame = again.toLowerCase() !== "y";
@@ -48,6 +48,6 @@ do {
         battle = new Battle();
     }
 } while (!endGame);
-console.log("\n👋 Thanks for playing! Goodbye!");
+console.log("\nThanks for playing! Goodbye!");
 await rl.close();
 //# sourceMappingURL=index.js.map

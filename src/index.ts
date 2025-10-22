@@ -4,6 +4,7 @@ import { availablePokemons } from "./Pokemons/AvailablePokemons.js";
 import type { Pokemon } from "./Pokemons/Pokemon.js";
 import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
+import { IPlayer } from "./Interfaces/IPlayer.js";
 
 const rl = createInterface({ input, output });
 let battle = new Battle();
@@ -35,7 +36,7 @@ async function choosePokemons(): Promise<Pokemon[]> {
     if (indexes.length === 3) {
       chosen = indexes.map((i) => availablePokemons[i]);
     } else {
-      console.log("❌ You must select exactly 3 Pokémon!");
+      console.log("You must select exactly 3 Pokémon!");
     }
   }
 
@@ -44,7 +45,7 @@ async function choosePokemons(): Promise<Pokemon[]> {
 
 do {
   console.clear();
-  console.log("🎮 Welcome to Pokémon Battle Simulator!\n");
+  console.log("Welcome to Pokémon Battle Simulator!\n");
 
   if(playerName === ""){
     playerName = await ask("Enter your player name: ");
@@ -54,8 +55,8 @@ do {
 
   const chosenPokemons = await choosePokemons();
 
-  const player = new Player(chosenPokemons, playerName);
-  await battle.startBattle(player, ask);
+  const player : IPlayer = new Player(chosenPokemons, playerName); // create player with name and chosen Pokémons
+  await battle.startBattle(player, ask); 
 
   const again = await ask("\nDo you want to play again? (y/n): ");
   endGame = again.toLowerCase() !== "y";
@@ -66,5 +67,5 @@ do {
 
 } while (!endGame);
 
-console.log("\n👋 Thanks for playing! Goodbye!");
+console.log("\nThanks for playing! Goodbye!");
 await rl.close();

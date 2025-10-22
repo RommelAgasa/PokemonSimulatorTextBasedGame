@@ -1,3 +1,4 @@
+import { IPlayer } from "../Interfaces/IPlayer.js";
 import type Tanngol from "../Player/Player.js";
 import Player from "../Player/Player.js";
 import { Pokemon } from "../Pokemons/Pokemon.js";
@@ -13,9 +14,9 @@ export class Battle{
         new Pokemon("Sandshrew", "Ground", 5)
     ];
 
-    private enemy = new Player(this.enemyPokemons, "Enemy");
+    private enemy : IPlayer  = new Player(this.enemyPokemons, "Enemy");
 
-    async startBattle(player: Player, ask: (question: string) => Promise<string>): Promise<void> {
+    async startBattle(player: IPlayer, ask: (question: string) => Promise<string>): Promise<void> {
         
         console.log("\n\n=== Pokémon Battle Simulator ===\n\n");
 
@@ -89,22 +90,11 @@ export class Battle{
     }
 
 
-    private AttackTurn(player: Player): void {
+    private AttackTurn(player: IPlayer): void {
         // Player attacks first
         player.attack(this.enemy.getActivePokemon()!);
-
-        // check if enemy fainted immediately after attack
-        if (this.enemy.getActivePokemon()!.health <= 0) {
-            return; // skip enemy’s attack this round
-        }
-
         // Enemy attacks back
         this.enemy.attack(player.getActivePokemon()!);
-
-        // check if player fainted immediately after attack
-        if (player.getActivePokemon()!.health <= 0) {
-            return; // skip to next loop (will switch next turn)
-        }
     }
 
     private static displayVsMessage(playerPoke: Pokemon, enemyPoke: Pokemon, switched: boolean): void {

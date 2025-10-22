@@ -6,7 +6,7 @@ export declare class Pokemon implements IPokemon {
     power: string;
     maxHealth: number;
     constructor(name: string, power: string, level?: number);
-    attack(target: Pokemon): void;
+    attack(target: IPokemon): void;
     defend(): void;
     private getTypeMultiplier;
 }

@@ -71,16 +71,8 @@ export class Battle {
     AttackTurn(player) {
         // Player attacks first
         player.attack(this.enemy.getActivePokemon());
-        // check if enemy fainted immediately after attack
-        if (this.enemy.getActivePokemon().health <= 0) {
-            return; // skip enemy’s attack this round
-        }
         // Enemy attacks back
         this.enemy.attack(player.getActivePokemon());
-        // check if player fainted immediately after attack
-        if (player.getActivePokemon().health <= 0) {
-            return; // skip to next loop (will switch next turn)
-        }
     }
     static displayVsMessage(playerPoke, enemyPoke, switched) {
         if (switched) {
