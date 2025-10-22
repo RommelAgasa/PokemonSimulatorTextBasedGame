@@ -2,7 +2,7 @@ export class Pokemon {
     name;
     health;
     level;
-    power; // e.g. "Fire", "Water", "Grass"
+    power; //"Fire", "Water", "Grass"
     maxHealth;
     constructor(name, power, level = 1) {
         this.name = name;

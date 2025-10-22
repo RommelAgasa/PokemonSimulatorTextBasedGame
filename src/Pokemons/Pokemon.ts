@@ -4,7 +4,7 @@ export class Pokemon implements IPokemon {
   name: string;
   health: number;
   level: number;
-  power: string; // e.g. "Fire", "Water", "Grass"
+  power: string; //"Fire", "Water", "Grass"
   maxHealth: number;
 
   constructor(name: string, power: string, level: number = 1) {
