@@ -32,7 +32,7 @@ export class Battle{
 
         do {
             //  Wait for player action
-            action = (await ask("Press [A] to Attack or [D] to Defend and press Enter to continue...")).toLowerCase();
+            action = (await ask("Press [A] to Attack or [D] to Defend and press Enter to continue...  ")).toLowerCase();
 
             if (action === "a") {
                 // Player attacks first
@@ -48,7 +48,7 @@ export class Battle{
                 }
             } 
             else {
-                console.log("❌ Invalid action! Please enter A or D.");
+                console.log("Invalid action! Please enter A or D.");
                 continue; // repeat the turn
             }
 

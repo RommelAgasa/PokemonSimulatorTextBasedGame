@@ -18,10 +18,9 @@ export class Battle {
         let enemyPoke = this.enemy.getActivePokemon();
         console.log("\n=== Battle Start ===\n");
         Battle.displayVsMessage(playerPoke, enemyPoke, false);
-        let switched = "";
         let action;
         do {
-            // 🟢 Wait for player action
+            //  Wait for player action
             action = (await ask("Press [A] to Attack or [D] to Defend and press Enter to continue...")).toLowerCase();
             if (action === "a") {
                 // Player attacks first
@@ -40,7 +39,7 @@ export class Battle {
                 continue; // repeat the turn
             }
             console.log("\n---------------------------------------------------------------\n");
-            // 🟡 Check if enemy fainted after attack
+            // Check if enemy fainted after attack
             if (this.enemy.getActivePokemon().health <= 0) {
                 console.log(`${this.enemy.name}'s ${this.enemy.getActivePokemon().name} fainted!\n`);
                 if (!this.enemy.isAllPokemonIsDead()) {
@@ -50,7 +49,7 @@ export class Battle {
                 }
                 continue; // skip to next loop
             }
-            // 🔴 Check if player fainted after enemy’s attack
+            // Check if player fainted after enemy’s attack
             if (player.getActivePokemon().health <= 0) {
                 console.log(`${player.name}'s ${player.getActivePokemon().name} fainted!\n`);
                 if (!player.isAllPokemonIsDead()) {
