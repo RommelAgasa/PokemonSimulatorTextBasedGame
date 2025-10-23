@@ -1,8 +1,9 @@
 import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
-import { Pokemon } from "../Pokemons/Pokemon.js";
-import { PokemonFactory } from "../Pokemons/PokemonFactory.js";
-import { PokemonCatalog } from "../Pokemons/PokemonCatalog.js";
+import { Pokemon } from "../Pokemon/Pokemon.js";
+import { PokemonFactory } from "../Pokemon/PokemonFactory.js";
+import { PokemonCatalog } from "../Pokemon/PokemonCatalog.js";
+import { IPokemon } from "../Interfaces/IPokemon.js";
 
 export class GameInterface {
 
@@ -13,7 +14,7 @@ export class GameInterface {
         return answer.trim();
     }
 
-    public static async choosePokemons(): Promise<Pokemon[]> {
+    public static async choosePokemons(): Promise<IPokemon[]> {
       const allPokemons = PokemonCatalog.all;
 
       console.log("\nAvailable Pokémon:");
@@ -21,7 +22,7 @@ export class GameInterface {
         console.log(`${i + 1}. ${p.name} (Type: ${p.power}, Level: ${p.level})`);
       });
 
-      let chosen: Pokemon[] = [];
+      let chosen: IPokemon[] = [];
 
       while (chosen.length !== 3) {
         const input = await GameInterface.ask(

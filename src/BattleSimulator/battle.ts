@@ -1,8 +1,8 @@
 import { IPlayer } from "../Interfaces/IPlayer.js";
-import Player from "../Player/Player.js";
-import { Pokemon } from "../Pokemons/Pokemon.js";
-import { PokemonCatalog } from "../Pokemons/PokemonCatalog.js";
-import { PokemonFactory } from "../Pokemons/PokemonFactory.js";
+import { IPokemon } from "../Interfaces/IPokemon.js";
+import { Player } from "../Player/Player.js";
+import { PokemonCatalog } from "../Pokemon/PokemonCatalog.js";
+import { PokemonFactory } from "../Pokemon/PokemonFactory.js";
 
 export class Battle {
   private player!: IPlayer;
@@ -16,24 +16,24 @@ export class Battle {
   public static makeEnemy(): IPlayer {
     const enemyName = "Team Rocket Grunt";
     const allPokemons = PokemonCatalog.all;
-    const enemyPokemons: Pokemon[] = [];
-    while (enemyPokemons.length < 3) {
+    const enemyPlayer: IPlayer = new Player(enemyName);
+    while (enemyPlayer.getBag().getAllPokemons().length < 3) {
+      // Randomly select a Pokémon from the catalog
       const randomIndex = Math.floor(Math.random() * allPokemons.length);
       const p = allPokemons[randomIndex];
-      const spawned = PokemonFactory.createPokemon(p.name, p.power, p.level) as Pokemon;
-      if (!enemyPokemons.find(ep => ep.name === spawned.name)) {
-        enemyPokemons.push(spawned);
+      // Create the Pokémon using the factory
+      const spawned = PokemonFactory.createPokemon(p.name, p.power, p.level) as IPokemon;
+      if (!enemyPlayer.getBag().getAllPokemons().find(ep => ep.name === spawned.name)) {
+        // Register the Pokémon to the enemy's bag
+        enemyPlayer.getBag().registerPokemon(spawned.name, spawned.power, spawned.level);
       }
     }
 
-    return new Player(enemyPokemons, enemyName);
+    return enemyPlayer;
   }
 
   // --- Entry Point ---
   public async startBattle(ask: (q: string) => Promise<string>): Promise<void> {
-    if (!this.player || !this.enemy) {
-      throw new Error("Battle not properly set up. Call setup() before starting.");
-    }
 
     console.log("\n\n=== Pokémon Battle Simulator ===\n\n");
 
@@ -113,7 +113,7 @@ export class Battle {
   }
 
   // --- Show Pokémon VS Status ---
-  private displayVsMessage(playerPoke: Pokemon, enemyPoke: Pokemon, switched: boolean): void {
+  private displayVsMessage(playerPoke: IPokemon, enemyPoke: IPokemon, switched: boolean): void {
     const context = switched ? "New matchup:" : "";
     console.log(
       `\n${context} ${playerPoke.name} (HP: ${playerPoke.health}/${playerPoke.maxHealth}) VS ${enemyPoke.name} (HP: ${enemyPoke.health}/${enemyPoke.maxHealth})\n`

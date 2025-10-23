@@ -1,50 +1,74 @@
-import type { IPlayer } from '../Interfaces/IPlayer.js';
-import { Pokemon } from '../Pokemons/Pokemon.js';
+import type { IPokemon } from "../Interfaces/IPokemon.js";
+import type { IPlayer } from "../Interfaces/IPlayer.js";
+import { PokemonBag } from "../Pokemon/PokemonBag.js";
 
-export default class Player implements IPlayer {
+export class Player implements IPlayer {
   public name: string;
-  private pokemons: Pokemon[] = [];
-  private activePokemon?: Pokemon;
+  private bag: PokemonBag;
+  private playerPoke: IPokemon | null = null;
 
-  constructor(IPokemon: Pokemon[], name: string) {
-    this.pokemons = IPokemon;
+  constructor(name: string) {
     this.name = name;
+    this.bag = new PokemonBag(); // Each player has their own bag
+  }
+
+  // ==========================
+  // Core Pokémon Management
+  // ==========================
+
+  public catchPokemon(name: string, power: string, level: number): void {
+    this.bag.registerPokemon(name, power, level);
+    console.log(`${this.name} caught a ${name} (${power}, Lv.${level})!`);
   }
 
   public choosePokemonToFight(): void {
-    // Choose the first healthy Pokémon
-    const available = this.pokemons.find(p => p.health > 0);
-    if (available) {
-      this.activePokemon = available;
-      console.log(`\n${this.name} sends out ${available.name}!`);
+    const allPokemons = this.bag.getAllPokemons() as IPokemon[]; // get all pokemons in the bag
+    const healthyPokemon = allPokemons.find(p => p.health > 0);
+
+    if (healthyPokemon) {
+      this.playerPoke = healthyPokemon;
+      console.log(`${this.name} sent out ${healthyPokemon.name} to battle!`);
     } else {
-      console.log("All Pokémon fainted!");
+      this.playerPoke = null;
+      console.log(`${this.name} has no healthy Pokémon left!`);
     }
   }
 
-  public isAllPokemonIsDead(): boolean {
-    return this.pokemons.every(p => p.health <= 0);
+  public healAllPokemons(): void {
+    this.bag.restoreAllPokemons();
   }
 
-  public attack(enemy: Pokemon): void {
-    if (!this.activePokemon) {
+  public getBag(): PokemonBag {
+    return this.bag;
+  }
+
+  // ==========================
+  // Battle-related Methods
+  // ==========================
+
+  public getActivePokemon(): IPokemon | null{
+    return this.playerPoke;
+  }
+
+   public attack(enemy: IPokemon): void {
+    if (!this.playerPoke) {
       console.log("No active Pokémon selected!");
       return;
     }
 
-    this.activePokemon.attack(enemy);
+    this.playerPoke.attack(enemy);
   }
 
   public defend(): void {
-    if (!this.activePokemon) {
+    if (!this.playerPoke) {
       console.log("No active Pokémon selected!");
       return;
     }
 
-    this.activePokemon.defend();
+    this.playerPoke.defend();
   }
 
-  public getActivePokemon(): Pokemon | undefined {
-    return this.activePokemon;
+  public isAllPokemonIsDead(): boolean {
+    return this.bag.allPokemonDead();
   }
 }

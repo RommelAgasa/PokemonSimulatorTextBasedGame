@@ -1,4 +1,4 @@
-import Player from "../Player/Player.js";
+import { Player } from "../Player/Player.js";
 import { PokemonCatalog } from "../Pokemons/PokemonCatalog.js";
 import { PokemonFactory } from "../Pokemons/PokemonFactory.js";
 export class Battle {
@@ -11,22 +11,22 @@ export class Battle {
     static makeEnemy() {
         const enemyName = "Team Rocket Grunt";
         const allPokemons = PokemonCatalog.all;
-        const enemyPokemons = [];
-        while (enemyPokemons.length < 3) {
+        const enemyPlayer = new Player(enemyName);
+        while (enemyPlayer.getBag().getAllPokemons().length < 3) {
+            // Randomly select a Pokémon from the catalog
             const randomIndex = Math.floor(Math.random() * allPokemons.length);
             const p = allPokemons[randomIndex];
+            // Create the Pokémon using the factory
             const spawned = PokemonFactory.createPokemon(p.name, p.power, p.level);
-            if (!enemyPokemons.find(ep => ep.name === spawned.name)) {
-                enemyPokemons.push(spawned);
+            if (!enemyPlayer.getBag().getAllPokemons().find(ep => ep.name === spawned.name)) {
+                // Register the Pokémon to the enemy's bag
+                enemyPlayer.getBag().registerPokemon(spawned.name, spawned.power, spawned.level);
             }
         }
-        return new Player(enemyPokemons, enemyName);
+        return enemyPlayer;
     }
     // --- Entry Point ---
     async startBattle(ask) {
-        if (!this.player || !this.enemy) {
-            throw new Error("Battle not properly set up. Call setup() before starting.");
-        }
         console.log("\n\n=== Pokémon Battle Simulator ===\n\n");
         // Setup active Pokémon
         this.player.choosePokemonToFight();

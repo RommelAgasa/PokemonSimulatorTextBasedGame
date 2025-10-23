@@ -1,14 +1,18 @@
-import type { IPlayer } from '../Interfaces/IPlayer.js';
-import { Pokemon } from '../Pokemons/Pokemon.js';
-export default class Player implements IPlayer {
+import type { IPokemon } from "../Interfaces/IPokemon.js";
+import type { IPlayer } from "../Interfaces/IPlayer.js";
+import { PokemonBag } from "../Pokemons/PokemonBag.js";
+export declare class Player implements IPlayer {
     name: string;
-    private pokemons;
-    private activePokemon?;
-    constructor(IPokemon: Pokemon[], name: string);
+    private bag;
+    private playerPoke;
+    constructor(name: string);
+    catchPokemon(name: string, power: string, level: number): void;
     choosePokemonToFight(): void;
-    isAllPokemonIsDead(): boolean;
-    attack(enemy: Pokemon): void;
+    healAllPokemons(): void;
+    getBag(): PokemonBag;
+    getActivePokemon(): IPokemon | null;
+    attack(enemy: IPokemon): void;
     defend(): void;
-    getActivePokemon(): Pokemon | undefined;
+    isAllPokemonIsDead(): boolean;
 }
 //# sourceMappingURL=Player.d.ts.map
